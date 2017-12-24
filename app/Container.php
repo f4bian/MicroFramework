@@ -9,10 +9,19 @@
 namespace App;
 
 
+/**
+ * @property mixed config
+ */
 class Container implements \ArrayAccess
 {
 
     protected $items = [];
+    protected $cache = [];
+
+    public function __get($property)
+    {
+        return $this->offsetGet($property);
+    }
 
     /**
      * Whether a offset exists
@@ -52,7 +61,17 @@ class Container implements \ArrayAccess
      */
     public function offsetGet($offset)
     {
+        if(!$this->has($offset)) {
+            return null;
+        }
 
+        if(isset($this->cache[$offset])) {
+            return $this->cache[$offset];
+        }
+
+        $this->cache[$offset] = $this->items[$offset]();
+
+        return $this->items[$offset]();
     }
 
     /**
@@ -83,6 +102,8 @@ class Container implements \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        // TODO: Implement offsetUnset() method.
+        if ($this->has($offset)) {
+            unset($this->items[$offset]);
+        }
     }
 }
