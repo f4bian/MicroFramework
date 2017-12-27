@@ -27,3 +27,6 @@ $container['db'] = function ($c) {
         $c->config['db_password']
     );
 };
+
+var_dump($container->db);
+

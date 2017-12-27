@@ -69,9 +69,12 @@ class Container implements \ArrayAccess
             return $this->cache[$offset];
         }
 
-        $this->cache[$offset] = $this->items[$offset]();
+        $item = $this->items[$offset]($this);
 
-        return $this->items[$offset]();
+        $this->cache[$offset] = $item;
+
+
+        return $item;
     }
 
     /**
