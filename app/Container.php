@@ -18,6 +18,12 @@ class Container implements \ArrayAccess
     protected $items = [];
     protected $cache = [];
 
+    public function __construct (array $items = []) {
+        foreach ($items as $key => $item) {
+            $this->offsetSet($key, $item);
+        }
+    }
+
     public function __get($property)
     {
         return $this->offsetGet($property);

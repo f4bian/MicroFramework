@@ -28,5 +28,5 @@ $container['db'] = function ($c) {
     );
 };
 
-var_dump($container->db);
+$app->run();
 
